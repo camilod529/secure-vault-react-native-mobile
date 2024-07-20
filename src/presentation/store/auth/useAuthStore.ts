@@ -1,6 +1,10 @@
 import {create} from 'zustand';
 import {AuthStatus} from '../../../infrastructure/interfaces/auth.status';
-import {authLogin} from '../../../action/auth/auth';
+import {
+  authCheckStatus,
+  authLogin,
+  authRegister,
+} from '../../../action/auth/auth';
 import {User} from '../../../domain/entity/user';
 
 export interface AuthState {
@@ -19,7 +23,7 @@ export interface AuthState {
 }
 
 export const useAuthStore = create<AuthState>()((set, get) => ({
-  status: 'unauthenticated',
+  status: 'checking',
   token: undefined,
   user: undefined,
 
@@ -34,9 +38,26 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
     return false;
   },
   register: async (email: string, password: string, fullName: string) => {
+    const user = await authRegister(email, password, fullName);
+
+    if (user) {
+      set({status: 'authenticated', user});
+      return true;
+    }
+
     return false;
   },
-  checkStatus: async () => {},
+  checkStatus: async () => {
+    const user = await authCheckStatus();
+    if (user) {
+      set({status: 'authenticated', user});
+      return;
+    }
+    set({status: 'unauthenticated', user: undefined});
+    return;
+  },
 
-  logout: async () => {},
+  logout: async () => {
+    set({status: 'unauthenticated', user: undefined});
+  },
 }));
