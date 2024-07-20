@@ -1,18 +1,30 @@
 import React, {useState} from 'react';
-import {ScrollView, useWindowDimensions} from 'react-native';
+import {Alert, ScrollView, useWindowDimensions} from 'react-native';
 import {Layout, Input, Text, Button} from '@ui-kitten/components';
 import {StackScreenProps} from '@react-navigation/stack';
 import {MyIcon} from '../../components';
 import {RootStackParams} from '../../routes/Router';
+import {useAuthStore} from '../../store/auth/useAuthStore';
 
 interface Props extends StackScreenProps<RootStackParams, 'LoginScreen'> {}
 
 export const LoginScreen = ({navigation}: Props) => {
   const {height} = useWindowDimensions();
+  const {login} = useAuthStore();
   const [form, setForm] = useState({
     email: '',
     password: '',
   });
+
+  const onLogin = async () => {
+    if (form.email.length === 0 || form.password.length === 0) return;
+
+    const {email, password} = form;
+    const res = await login(email, password);
+    if (!res) {
+      Alert.alert('Error', 'Correo o contraseña incorrectos');
+    }
+  };
 
   return (
     <Layout style={{flex: 1}}>
@@ -53,7 +65,7 @@ export const LoginScreen = ({navigation}: Props) => {
         {/* button */}
         <Layout>
           <Button
-            onPress={() => console.log('login')}
+            onPress={onLogin}
             // disabled={isPosting}
             accessoryRight={<MyIcon name="arrow-forward-outline" white />}>
             Ingresar
