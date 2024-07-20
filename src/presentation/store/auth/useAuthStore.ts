@@ -17,7 +17,7 @@ export interface AuthState {
 }
 
 export const useAuthStore = create<AuthState>()((set, get) => ({
-  status: 'checking',
+  status: 'unauthenticated',
   token: undefined,
   user: undefined,
 
