@@ -3,8 +3,12 @@ import {MainLayout} from '../../layout/MainLayout';
 import {Button, Card, Layout, Text} from '@ui-kitten/components';
 import {useWindowDimensions} from 'react-native';
 import {useAuthStore} from '../../store/auth/useAuthStore';
+import {StackScreenProps} from '@react-navigation/stack';
+import {RootStackParams} from '../../routes/Router';
 
-export const HomePage = () => {
+interface Props extends StackScreenProps<RootStackParams, 'HomeScreen'> {}
+
+export const HomePage = ({navigation}: Props) => {
   const {height, width} = useWindowDimensions();
   const {user, logout} = useAuthStore();
 
@@ -29,7 +33,7 @@ export const HomePage = () => {
             textAlign: 'center',
             marginBottom: 20,
           }}>
-          ¡Bienvenido, <Text category="p1">{user?.fullName}</Text>!
+          Welcome, <Text category="p1">{user?.fullName}</Text>!
         </Text>
         <Button
           size="large"
@@ -37,8 +41,9 @@ export const HomePage = () => {
             marginHorizontal: 40,
             marginVertical: 7,
             width: width * 0.8,
-          }}>
-          <Text>Crear nueva transaccion</Text>
+          }}
+          onPress={() => navigation.navigate('CreateTransaction')}>
+          <Text>Create a new translation</Text>
         </Button>
         <Button
           style={{
@@ -47,7 +52,7 @@ export const HomePage = () => {
             width: width * 0.8,
           }}
           status="success">
-          <Text>Ver todas las transacciones</Text>
+          <Text>See all transactions</Text>
         </Button>
         <Button
           style={{
@@ -56,7 +61,7 @@ export const HomePage = () => {
             width: width * 0.8,
           }}
           status="warning">
-          <Text>Ver dinero total en la caja</Text>
+          <Text>See all money in safe</Text>
         </Button>
         <Button
           style={{
@@ -66,7 +71,7 @@ export const HomePage = () => {
           }}
           status="danger"
           onPress={logout}>
-          <Text>Cerrar sesion</Text>
+          <Text>Log out</Text>
         </Button>
       </Card>
     </Layout>
