@@ -51,7 +51,8 @@ export const HomePage = ({navigation}: Props) => {
             marginVertical: 7,
             width: width * 0.8,
           }}
-          status="success">
+          status="success"
+          onPress={() => navigation.navigate('AllTransactions')}>
           <Text>See all transactions</Text>
         </Button>
         <Button
