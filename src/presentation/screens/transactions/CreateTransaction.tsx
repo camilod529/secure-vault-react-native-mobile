@@ -11,12 +11,7 @@ import {
 import {MainLayout} from '../../layout/MainLayout';
 import {Formik} from 'formik';
 import {ScrollView, useWindowDimensions} from 'react-native';
-
-export enum Currency {
-  COP = 'COP',
-  USD = 'USD',
-  MXN = 'MXN',
-}
+import {Currency} from '../../../domain/entity/transaction';
 
 const formInitialValue = {
   name: '',
