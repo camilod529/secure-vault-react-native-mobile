@@ -1,6 +1,14 @@
 import React, {useState} from 'react';
 import {Alert, ScrollView, useWindowDimensions} from 'react-native';
-import {Layout, Input, Text, Button} from '@ui-kitten/components';
+import {
+  Layout,
+  Input,
+  Text,
+  Button,
+  Select,
+  SelectItem,
+  IndexPath,
+} from '@ui-kitten/components';
 import {StackScreenProps} from '@react-navigation/stack';
 import {MyIcon} from '../../components';
 import {RootStackParams} from '../../routes/Router';
@@ -10,13 +18,15 @@ import {useTranslation} from 'react-i18next';
 interface Props extends StackScreenProps<RootStackParams, 'LoginScreen'> {}
 
 export const LoginScreen = ({navigation}: Props) => {
-  const {t} = useTranslation();
+  const {t, i18n} = useTranslation();
   const {height} = useWindowDimensions();
   const {login} = useAuthStore();
   const [form, setForm] = useState({
     email: '',
     password: '',
   });
+
+  const [selectedLanguage, setSelectedLanguage] = useState(i18n.language);
 
   const onLogin = async () => {
     if (form.email.length === 0 || form.password.length === 0) {
@@ -31,13 +41,39 @@ export const LoginScreen = ({navigation}: Props) => {
     }
   };
 
+  const handleLanguageChange = (index: IndexPath | IndexPath[]) => {
+    const selectedIndex = Array.isArray(index) ? index[0].row : index.row;
+    const language = Object.keys(i18n.options.resources!)[selectedIndex];
+    setSelectedLanguage(language);
+    i18n.changeLanguage(language);
+  };
+
   return (
     <Layout style={{flex: 1}}>
       <ScrollView style={{marginHorizontal: 40}}>
-        <Layout style={{paddingTop: height * 0.3}}>
+        <Layout style={{paddingTop: height * 0.25}}>
           <Text category="h1">{t('Login')}</Text>
           <Text category="p2">{t('Please fill in all fields')}</Text>
         </Layout>
+
+        {/* Language Selector */}
+        <Layout style={{marginTop: 20}}>
+          <Select
+            label={t('Select Language')}
+            selectedIndex={
+              new IndexPath(
+                Object.keys(i18n.options.resources!).indexOf(selectedLanguage),
+              )
+            }
+            value={selectedLanguage.toUpperCase()}
+            onSelect={handleLanguageChange}
+            style={{marginBottom: 10}}>
+            {Object.keys(i18n.options.resources!).map((lng, index) => (
+              <SelectItem key={index} title={lng.toUpperCase()} />
+            ))}
+          </Select>
+        </Layout>
+
         {/* Inputs */}
         <Layout style={{marginTop: 20}}>
           <Input
@@ -61,7 +97,7 @@ export const LoginScreen = ({navigation}: Props) => {
         </Layout>
         <Layout style={{height: 20}} />
 
-        {/* button */}
+        {/* Button */}
         <Layout>
           <Button
             onPress={onLogin}
