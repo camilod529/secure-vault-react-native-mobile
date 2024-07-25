@@ -19,7 +19,7 @@ export const AllTransactions = ({navigation}: Props) => {
 
   if (isLoading) return <FullScreenLoader />;
 
-  if (!transactions)
+  if (!transactions || transactions.length === 0)
     return (
       // Show a error message
       <MainLayout title="All Transactions">
