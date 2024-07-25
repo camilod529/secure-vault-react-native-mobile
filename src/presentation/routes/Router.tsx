@@ -1,9 +1,13 @@
 import React from 'react';
-import {View, Text} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {HomePage, LoadingScreen, LoginScreen, RegisterScreen} from '../screens';
-import {CreateTransaction} from '../screens/transactions/CreateTransaction';
-import {AllTransactions} from '../screens/transactions/AllTransactions';
+import {
+  AllTransactions,
+  CreateTransaction,
+  HomePage,
+  LoadingScreen,
+  LoginScreen,
+  RegisterScreen,
+} from '../screens';
 
 export type RootStackParams = {
   LoginScreen: undefined;
