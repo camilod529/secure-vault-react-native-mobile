@@ -1,4 +1,6 @@
 import React from 'react';
+import {ScrollView, useWindowDimensions} from 'react-native';
+import {Formik} from 'formik';
 import {
   Card,
   Input,
@@ -9,9 +11,10 @@ import {
   IndexPath,
 } from '@ui-kitten/components';
 import {MainLayout} from '../../layout/MainLayout';
-import {Formik} from 'formik';
-import {ScrollView, useWindowDimensions} from 'react-native';
 import {Currency} from '../../../domain/entity/transaction';
+import {createTransaction} from '../../../action/transaction/transaction';
+import {RootStackParams} from '../../routes/Router';
+import {StackScreenProps} from '@react-navigation/stack';
 
 const formInitialValue = {
   name: '',
@@ -25,7 +28,10 @@ const transactionTypes = [
   {title: 'Expense', value: 'expense'},
 ];
 
-export const CreateTransaction = () => {
+interface Props
+  extends StackScreenProps<RootStackParams, 'CreateTransaction'> {}
+
+export const CreateTransaction = ({navigation}: Props) => {
   const {height} = useWindowDimensions();
 
   const handleSelect = (
@@ -38,13 +44,35 @@ export const CreateTransaction = () => {
     setFieldValue(fieldName, options[selectedIndex].value);
   };
 
-  const handleSubmit = (values: typeof formInitialValue) => {
+  const handleSubmit = async (values: typeof formInitialValue) => {
     // Convert amount to number
-    const formattedValues = {
-      ...values,
-      amount: parseFloat(values.amount),
+    const dataToSend = {
+      name: values.name,
+      Currency: values.currency,
+      amount:
+        values.transactionType === 'income'
+          ? Math.abs(parseFloat(values.amount as string))
+          : -Math.abs(parseFloat(values.amount as string)),
     };
-    console.log(formattedValues);
+
+    try {
+      const createdTransaction = await createTransaction(
+        dataToSend.name,
+        dataToSend.amount,
+        dataToSend.Currency,
+      );
+
+      if (!createdTransaction) {
+        console.error('Error creating transaction');
+      }
+
+      navigation.reset({
+        index: 0,
+        routes: [{name: 'HomeScreen'}],
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -120,7 +148,6 @@ export const CreateTransaction = () => {
                 Submit
               </Button>
             </Card>
-            <Text>{JSON.stringify(values, null, 2)}</Text>
           </ScrollView>
         </MainLayout>
       )}
