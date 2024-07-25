@@ -7,6 +7,7 @@ import {
   LoadingScreen,
   LoginScreen,
   RegisterScreen,
+  SeeAllMoneyByCurrency,
 } from '../screens';
 
 export type RootStackParams = {
@@ -16,6 +17,7 @@ export type RootStackParams = {
   LoadingScreen: undefined;
   CreateTransaction: undefined;
   AllTransactions: undefined;
+  SeeAllMoneyByCurrency: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParams>();
@@ -33,6 +35,10 @@ export const Router = () => {
       <Stack.Screen name="LoadingScreen" component={LoadingScreen} />
       <Stack.Screen name="CreateTransaction" component={CreateTransaction} />
       <Stack.Screen name="AllTransactions" component={AllTransactions} />
+      <Stack.Screen
+        name="SeeAllMoneyByCurrency"
+        component={SeeAllMoneyByCurrency}
+      />
     </Stack.Navigator>
   );
 };

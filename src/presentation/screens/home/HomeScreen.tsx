@@ -13,8 +13,8 @@ export const HomePage = ({navigation}: Props) => {
   const {user, logout} = useAuthStore();
 
   return (
-    <Layout style={{flex: 1}}>
-      <MainLayout title="Home">
+    <MainLayout title="Home">
+      <Layout style={{flex: 1}}>
         <Card
           style={{
             marginTop: height * 0.2,
@@ -61,7 +61,8 @@ export const HomePage = ({navigation}: Props) => {
               marginVertical: 7,
               width: width * 0.8,
             }}
-            status="warning">
+            status="warning"
+            onPress={() => navigation.navigate('SeeAllMoneyByCurrency')}>
             <Text>See all money in safe</Text>
           </Button>
           <Button
@@ -75,7 +76,7 @@ export const HomePage = ({navigation}: Props) => {
             <Text>Log out</Text>
           </Button>
         </Card>
-      </MainLayout>
-    </Layout>
+      </Layout>
+    </MainLayout>
   );
 };

@@ -4,3 +4,4 @@ export * from './home/HomeScreen';
 export * from './loading/LoadingScreen';
 export * from './transactions/CreateTransactionScreen';
 export * from './transactions/AllTransactionsScreen';
+export * from './transactions/SeeAllMoneyByCurrencyScreen';
