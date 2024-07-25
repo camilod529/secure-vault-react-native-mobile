@@ -24,17 +24,17 @@ const formInitialValue = {
   currency: Currency.COP,
 };
 
-const transactionTypes = [
-  {title: 'Income', value: 'income'},
-  {title: 'Expense', value: 'expense'},
-];
-
 interface Props
   extends StackScreenProps<RootStackParams, 'CreateTransaction'> {}
 
 export const CreateTransaction = ({navigation}: Props) => {
   const {height} = useWindowDimensions();
   const {t} = useTranslation();
+
+  const transactionTypes = [
+    {title: t('Income'), value: 'income'},
+    {title: t('Expense'), value: 'expense'},
+  ];
 
   const handleSelect = (
     index: IndexPath | IndexPath[],
