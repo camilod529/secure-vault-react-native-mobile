@@ -9,13 +9,11 @@ export const getAllTransactions = async (): Promise<Transaction[] | null> => {
       '/transactions',
     );
 
-    const transaction = data.map(
-      TransactionMapper.TransactionResponseToTransactionEntity,
-    );
+    const transaction = data
+      .map(TransactionMapper.TransactionResponseToTransactionEntity)
+      .sort((a, b) => b.created_at.getTime() - a.created_at.getTime());
 
-    console.log(transaction);
-
-    return [];
+    return transaction;
   } catch (error) {
     console.error(error);
     return null;
