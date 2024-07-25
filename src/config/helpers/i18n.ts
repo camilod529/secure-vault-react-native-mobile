@@ -46,6 +46,7 @@ const resources = {
       Submit: 'Submit',
       'Created by': 'Created by',
       'Created at': 'Created at',
+      'See all money in safe': 'See all money in safe',
     },
   },
   es: {
@@ -92,6 +93,7 @@ const resources = {
       Submit: 'Enviar',
       'Created by': 'Creado por',
       'Created at': 'Creado el',
+      'See all money in safe': 'Ver todo el dinero en la caja',
     },
   },
 };
