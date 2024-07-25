@@ -8,8 +8,9 @@ interface Props extends StackScreenProps<RootStackParams, 'AllTransactions'> {}
 export const AllTransactions = ({navigation}: Props) => {
   return (
     <>
-      <MainLayout title="All Transactions" />
-      <ScrollView style={{flex: 1}}></ScrollView>
+      <MainLayout title="All Transactions">
+        <ScrollView style={{flex: 1}}></ScrollView>
+      </MainLayout>
     </>
   );
 };

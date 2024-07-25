@@ -49,7 +49,7 @@ export const MainLayout = ({
   };
 
   return (
-    <>
+    <Layout style={{paddingTop: top + 10}}>
       <TopNavigation
         title={title}
         subtitle={subtitle}
@@ -58,6 +58,7 @@ export const MainLayout = ({
         accessoryRight={() => <RenderRightAction />}
       />
       <Divider />
-    </>
+      <Layout style={[{height: '100%'}, style]}>{children}</Layout>
+    </Layout>
   );
 };
