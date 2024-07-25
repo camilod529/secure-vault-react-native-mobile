@@ -5,15 +5,17 @@ import {useWindowDimensions} from 'react-native';
 import {useAuthStore} from '../../store/auth/useAuthStore';
 import {StackScreenProps} from '@react-navigation/stack';
 import {RootStackParams} from '../../routes/Router';
+import {useTranslation} from 'react-i18next';
 
 interface Props extends StackScreenProps<RootStackParams, 'HomeScreen'> {}
 
 export const HomePage = ({navigation}: Props) => {
   const {height, width} = useWindowDimensions();
   const {user, logout} = useAuthStore();
+  const {t} = useTranslation();
 
   return (
-    <MainLayout title="Home">
+    <MainLayout title={t('Home')}>
       <Layout style={{flex: 1}}>
         <Card
           style={{
@@ -25,7 +27,7 @@ export const HomePage = ({navigation}: Props) => {
             style={{
               textAlign: 'center',
             }}>
-            Menu
+            {t('Menu')}
           </Text>
           <Text
             category="p1"
@@ -33,7 +35,7 @@ export const HomePage = ({navigation}: Props) => {
               textAlign: 'center',
               marginBottom: 20,
             }}>
-            Welcome, <Text category="p1">{user?.fullName}</Text>!
+            {t('Welcome')}, <Text category="p1">{user?.fullName}</Text>!
           </Text>
           <Button
             size="large"
@@ -43,7 +45,7 @@ export const HomePage = ({navigation}: Props) => {
               width: width * 0.8,
             }}
             onPress={() => navigation.navigate('CreateTransaction')}>
-            <Text>Create a new translation</Text>
+            <Text>{t('Create Transaction')}</Text>
           </Button>
           <Button
             style={{
@@ -53,7 +55,7 @@ export const HomePage = ({navigation}: Props) => {
             }}
             status="success"
             onPress={() => navigation.navigate('AllTransactions')}>
-            <Text>See all transactions</Text>
+            <Text>{t('View All Transactions')}</Text>
           </Button>
           <Button
             style={{
@@ -63,7 +65,7 @@ export const HomePage = ({navigation}: Props) => {
             }}
             status="warning"
             onPress={() => navigation.navigate('SeeAllMoneyByCurrency')}>
-            <Text>See all money in safe</Text>
+            <Text>{t('View Total Money in Safe')}</Text>
           </Button>
           <Button
             style={{
@@ -73,7 +75,7 @@ export const HomePage = ({navigation}: Props) => {
             }}
             status="danger"
             onPress={logout}>
-            <Text>Log out</Text>
+            <Text>{t('Logout')}</Text>
           </Button>
         </Card>
       </Layout>

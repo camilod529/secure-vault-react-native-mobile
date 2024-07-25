@@ -7,10 +7,12 @@ import {getAllTransactions} from '../../../action/transaction/transaction';
 import {Layout, Text} from '@ui-kitten/components';
 import {StyleSheet} from 'react-native';
 import {FullScreenLoader, TransactionList} from '../../components';
+import {useTranslation} from 'react-i18next';
 
 interface Props extends StackScreenProps<RootStackParams, 'AllTransactions'> {}
 
 export const AllTransactions = ({navigation}: Props) => {
+  const {t} = useTranslation();
   const {isLoading, data: transactions = []} = useQuery({
     queryKey: ['transactions', 'all'],
     staleTime: 1000 * 60 * 60, // 1 hour
@@ -21,24 +23,21 @@ export const AllTransactions = ({navigation}: Props) => {
 
   if (!transactions || transactions.length === 0)
     return (
-      // Show a error message
-      <MainLayout title="All Transactions">
+      <MainLayout title={t('All Transactions')}>
         <Layout
           style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-          <Text style={styles.errorText}>Error: No transactions found.</Text>
+          <Text style={styles.errorText}>{t('No transactions found.')}</Text>
         </Layout>
       </MainLayout>
     );
 
   return (
-    <>
-      <MainLayout title="All Transactions">
-        <TransactionList
-          transactions={transactions}
-          queryKey={['transactions', 'all']}
-        />
-      </MainLayout>
-    </>
+    <MainLayout title={t('All Transactions')}>
+      <TransactionList
+        transactions={transactions}
+        queryKey={['transactions', 'all']}
+      />
+    </MainLayout>
   );
 };
 

@@ -6,12 +6,14 @@ import {MyIcon} from '../../components/ui/MyIcon';
 import {StackScreenProps} from '@react-navigation/stack';
 import {useAuthStore} from '../../store/auth/useAuthStore';
 import {RootStackParams} from '../../routes/Router';
+import {useTranslation} from 'react-i18next';
 
 interface Props extends StackScreenProps<RootStackParams, 'RegisterScreen'> {}
 
 export const RegisterScreen = ({navigation}: Props) => {
   const {height} = useWindowDimensions();
   const {register} = useAuthStore();
+  const {t} = useTranslation();
   const [form, setForm] = useState({
     email: '',
     password: '',
@@ -43,22 +45,16 @@ export const RegisterScreen = ({navigation}: Props) => {
 
   return (
     <Layout style={{flex: 1}}>
-      <ScrollView
-        style={{
-          marginHorizontal: 40,
-        }}>
+      <ScrollView style={{marginHorizontal: 40}}>
         <Layout style={{paddingTop: height * 0.3}}>
-          <Text category="h1">Crear cuenta</Text>
-          <Text category="p2">Por favor, crea una cuenta para continuar</Text>
+          <Text category="h1">{t('Register')}</Text>
+          <Text category="p2">{t('Please fill in all fields')}</Text>
         </Layout>
 
         {/* Inputs */}
-        <Layout
-          style={{
-            marginTop: 20,
-          }}>
+        <Layout style={{marginTop: 20}}>
           <Input
-            placeholder="Nombre completo"
+            placeholder={t('Full name')}
             keyboardType="default"
             autoCapitalize="none"
             value={form.fullName}
@@ -67,7 +63,7 @@ export const RegisterScreen = ({navigation}: Props) => {
             accessoryLeft={<MyIcon name="person-outline" />}
           />
           <Input
-            placeholder="Correo electrónico"
+            placeholder={t('Email')}
             keyboardType="email-address"
             autoCapitalize="none"
             value={form.email}
@@ -76,7 +72,7 @@ export const RegisterScreen = ({navigation}: Props) => {
             accessoryLeft={<MyIcon name="email-outline" />}
           />
           <Input
-            placeholder="Contraseña"
+            placeholder={t('Password')}
             secureTextEntry
             autoCapitalize="none"
             value={form.password}
@@ -92,7 +88,7 @@ export const RegisterScreen = ({navigation}: Props) => {
           <Button
             onPress={onRegister}
             accessoryRight={<MyIcon name="arrow-forward-outline" white />}>
-            Registrate
+            {t('Register')}
           </Button>
         </Layout>
 
@@ -104,9 +100,9 @@ export const RegisterScreen = ({navigation}: Props) => {
             justifyContent: 'center',
             alignItems: 'flex-end',
           }}>
-          <Text category="p2">¿Ya tienes una cuenta? </Text>
+          <Text category="p2">{t('Go to Login')} </Text>
           <Text status="primary" category="s1" onPress={() => navigation.pop()}>
-            Ingresar
+            {t('Login')}
           </Text>
         </Layout>
       </ScrollView>

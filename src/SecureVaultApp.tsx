@@ -6,9 +6,12 @@ import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {NavigationContainer} from '@react-navigation/native';
 import {ApplicationProvider, IconRegistry} from '@ui-kitten/components';
 import * as eva from '@eva-design/eva';
+
 import {EvaIconsPack} from '@ui-kitten/eva-icons';
 import {Router} from './presentation/routes/Router';
 import {AuthProvider} from './presentation/provider/AuthProvider';
+import {I18nextProvider} from 'react-i18next';
+import i18n from './config/i18n';
 
 const queryCLient = new QueryClient();
 
@@ -21,26 +24,28 @@ export const SecureVaultApp = () => {
       : theme['color-basic-100'];
 
   return (
-    <QueryClientProvider client={queryCLient}>
-      <IconRegistry icons={EvaIconsPack} />
-      <ApplicationProvider {...eva} theme={theme}>
-        <NavigationContainer
-          theme={{
-            dark: colorScheme === 'dark',
-            colors: {
-              primary: theme['color-primary-500'],
-              background: backgroundColor,
-              card: theme['color-basic-100'],
-              text: theme['text-basic-color'],
-              border: theme['color-basic-800'],
-              notification: theme['color-primary-500'],
-            },
-          }}>
-          <AuthProvider>
-            <Router />
-          </AuthProvider>
-        </NavigationContainer>
-      </ApplicationProvider>
-    </QueryClientProvider>
+    <I18nextProvider i18n={i18n}>
+      <QueryClientProvider client={queryCLient}>
+        <IconRegistry icons={EvaIconsPack} />
+        <ApplicationProvider {...eva} theme={theme}>
+          <NavigationContainer
+            theme={{
+              dark: colorScheme === 'dark',
+              colors: {
+                primary: theme['color-primary-500'],
+                background: backgroundColor,
+                card: theme['color-basic-100'],
+                text: theme['text-basic-color'],
+                border: theme['color-basic-800'],
+                notification: theme['color-primary-500'],
+              },
+            }}>
+            <AuthProvider>
+              <Router />
+            </AuthProvider>
+          </NavigationContainer>
+        </ApplicationProvider>
+      </QueryClientProvider>
+    </I18nextProvider>
   );
 };

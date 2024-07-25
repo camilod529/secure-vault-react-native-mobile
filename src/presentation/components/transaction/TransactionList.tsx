@@ -27,8 +27,6 @@ export const TransactionList = ({
     setIsRefreshing(false);
   };
 
-  console.log(transactions);
-
   return (
     <List
       data={transactions}

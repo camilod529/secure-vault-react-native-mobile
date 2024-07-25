@@ -1,13 +1,17 @@
-import {Card, Layout, Text} from '@ui-kitten/components';
+import React from 'react';
+import {Card, Text} from '@ui-kitten/components';
 import {Transaction} from '../../../domain/entity/transaction';
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {transformToLegibleNumber} from '../../../config/helpers/transformToLegibleNumber';
+import {useTranslation} from 'react-i18next';
 
 interface Props {
   transaction: Transaction;
 }
 
 export const TransactionCard = ({transaction}: Props) => {
+  const {t} = useTranslation();
+
   return (
     <Card
       style={{margin: 10}}
@@ -29,10 +33,10 @@ export const TransactionCard = ({transaction}: Props) => {
           {transformToLegibleNumber(transaction.amount, transaction.currency)}
         </Text>
         <Text style={styles.detail} appearance="hint" category="c1">
-          Created by: {transaction.createdBy.fullName}
+          {t('Created by')}: {transaction.createdBy.fullName}
         </Text>
         <Text style={styles.detail} appearance="hint" category="c1">
-          Created at: {transaction.created_at.toLocaleString()}
+          {t('Created at')}: {transaction.created_at.toLocaleString()}
         </Text>
       </View>
     </Card>

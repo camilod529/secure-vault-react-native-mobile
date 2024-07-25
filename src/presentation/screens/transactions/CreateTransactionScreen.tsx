@@ -15,6 +15,7 @@ import {Currency} from '../../../domain/entity/transaction';
 import {createTransaction} from '../../../action/transaction/transaction';
 import {RootStackParams} from '../../routes/Router';
 import {StackScreenProps} from '@react-navigation/stack';
+import {useTranslation} from 'react-i18next';
 
 const formInitialValue = {
   name: '',
@@ -33,6 +34,7 @@ interface Props
 
 export const CreateTransaction = ({navigation}: Props) => {
   const {height} = useWindowDimensions();
+  const {t} = useTranslation();
 
   const handleSelect = (
     index: IndexPath | IndexPath[],
@@ -45,7 +47,6 @@ export const CreateTransaction = ({navigation}: Props) => {
   };
 
   const handleSubmit = async (values: typeof formInitialValue) => {
-    // Convert amount to number
     const dataToSend = {
       name: values.name,
       Currency: values.currency,
@@ -78,24 +79,24 @@ export const CreateTransaction = ({navigation}: Props) => {
   return (
     <Formik initialValues={formInitialValue} onSubmit={handleSubmit}>
       {({handleChange, handleSubmit, values, errors, setFieldValue}) => (
-        <MainLayout title="Create Transaction">
+        <MainLayout title={t('Create Transaction')}>
           <ScrollView style={{flex: 1}}>
             <Card style={{marginTop: height * 0.2, marginHorizontal: 10}}>
               <Input
-                label="Name"
+                label={t('Name')}
                 style={{margin: 5}}
                 value={values.name}
                 onChangeText={handleChange('name')}
               />
               <Input
-                label="Amount"
+                label={t('Amount')}
                 style={{margin: 5}}
                 value={values.amount}
                 onChangeText={handleChange('amount')}
                 keyboardType="numeric"
               />
               <Select
-                label="Transaction Type"
+                label={t('Transaction Type')}
                 selectedIndex={
                   new IndexPath(
                     transactionTypes.findIndex(
@@ -117,11 +118,11 @@ export const CreateTransaction = ({navigation}: Props) => {
                 }
                 style={{margin: 5}}>
                 {transactionTypes.map((type, index) => (
-                  <SelectItem key={index} title={type.title} />
+                  <SelectItem key={index} title={t(type.title)} />
                 ))}
               </Select>
               <Select
-                label="Currency"
+                label={t('Currency')}
                 selectedIndex={
                   new IndexPath(
                     Object.values(Currency).indexOf(values.currency),
@@ -141,11 +142,11 @@ export const CreateTransaction = ({navigation}: Props) => {
                 }
                 style={{margin: 5}}>
                 {Object.values(Currency).map((currency, index) => (
-                  <SelectItem key={index} title={currency} />
+                  <SelectItem key={index} title={t(currency)} />
                 ))}
               </Select>
               <Button onPress={() => handleSubmit()} style={{marginTop: 10}}>
-                Submit
+                {t('Submit')}
               </Button>
             </Card>
           </ScrollView>
