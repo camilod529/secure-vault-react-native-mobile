@@ -1,4 +1,3 @@
-import {ScrollView} from 'react-native-gesture-handler';
 import {MainLayout} from '../../layout/MainLayout';
 import {StackScreenProps} from '@react-navigation/stack';
 import {RootStackParams} from '../../routes/Router';
@@ -32,7 +31,10 @@ export const AllTransactions = ({navigation}: Props) => {
     );
 
   return (
-    <MainLayout title={t('All Transactions')}>
+    <MainLayout
+      title={t('All Transactions')}
+      rightAction={() => navigation.navigate('SeeAllMoneyByCurrency')}
+      rightActionIcon="trending-up-outline">
       <TransactionList
         transactions={transactions}
         queryKey={['transactions', 'all']}
