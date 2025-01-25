@@ -90,10 +90,10 @@ android {
             keyPassword 'android'
         }
         release {
-      storeFile file('your_key_name.keystore')
-      storePassword 'C163664547AB26AF155ACF93E9D27D96EA40FEEE28F9A95D5AA1E381100BAD17'
-      keyAlias 'your_key_alias'
-      keyPassword 'C163664547AB26AF155ACF93E9D27D96EA40FEEE28F9A95D5AA1E381100BAD17'
+      storeFile file('secure_vault_key.keystore')
+      storePassword 'Cami0313'
+      keyAlias 'secure_vault_alias'
+      keyPassword 'Cami0313'
     }
     }
     buildTypes {
