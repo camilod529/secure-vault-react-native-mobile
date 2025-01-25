@@ -3,7 +3,7 @@ import {Currency, Transaction} from '../../domain/entity/transaction';
 import {TransactionResponse} from '../../infrastructure/interfaces/transaction.response';
 import {TransactionMapper} from '../../infrastructure/mappers/transactionMapper';
 
-export const getAllTransactions = async (): Promise<Transaction[] | null> => {
+export const getAllTransactions = async (): Promise<Transaction[]> => {
   try {
     const {data} = await secureVaultApi.get<TransactionResponse[]>(
       '/transactions',
@@ -16,7 +16,7 @@ export const getAllTransactions = async (): Promise<Transaction[] | null> => {
     return transaction;
   } catch (error) {
     console.error(error);
-    return null;
+    return [];
   }
 };
 

@@ -25,20 +25,6 @@ export const SeeAllMoneyByCurrency = ({navigation}: Props) => {
     queryFn: () => getAllTransactions(),
   });
 
-  if (isLoading) return <FullScreenLoader />;
-
-  if (!transactions || transactions.length === 0)
-    return (
-      <MainLayout title={t('All Transactions')}>
-        <Layout
-          style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-          <Text style={styles.errorText}>
-            {t('Error: No transactions found.')}
-          </Text>
-        </Layout>
-      </MainLayout>
-    );
-
   useEffect(() => {
     const calculateTotals = () => {
       const totals: {[key in Currency]?: number} = {
@@ -51,11 +37,27 @@ export const SeeAllMoneyByCurrency = ({navigation}: Props) => {
           totals[transaction.currency as Currency]! += transaction.amount;
         }
       });
-      setTotal(totals);
+      if (JSON.stringify(totals) !== JSON.stringify(total)) {
+        setTotal(totals);
+      }
     };
 
     calculateTotals();
   }, [transactions]);
+
+  if (isLoading) return <FullScreenLoader />;
+
+  if (transactions.length === 0)
+    return (
+      <MainLayout title={t('All Transactions')}>
+        <Layout
+          style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <Text style={styles.errorText}>
+            {t('Error: No transactions found.')}
+          </Text>
+        </Layout>
+      </MainLayout>
+    );
 
   return (
     <MainLayout title={t('See all money in safe')}>
